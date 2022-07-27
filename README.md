@@ -1,8 +1,9 @@
-This year the VIP Cup competition @ICIP2022 is organized by University Federico II of Naples and NVIDIA.
-The aim is to distinguish real versus AI-based content in images.
-Teams are requested to design a strategy for synthetic image detection by relying on image processing and machine learning techniques.
+## VIPCup 2022 - Extend
+<details>
 
-![Examples](fig.jpg "Examples")
+<summary>This year the VIP Cup competition @ICIP2022 is organized by University Federico II of Naples and NVIDIA.
+The aim is to distinguish real versus AI-based content in images.
+Teams are requested to design a strategy for synthetic image detection by relying on image processing and machine learning techniques. </summary>
 
 ### Background
 
@@ -46,19 +47,15 @@ The final competition will be judged at ICIP 2022, which will be held on **Octob
 
 General information and resources are available on the [page web](https://grip-unina.github.io/vipcup2022/) and [Piazza class](https://piazza.com/university_of_naples_federico_ii/summer2022/vipcup2022).
 
-To set up a free account, use the access code "vipcup2022" to join as a student the "VIPCUP 2022: IEEE Video and Image Processing Cup" class.
+</details>
+
+> To set up a free account, use the access code "vipcup2022" to join as a student the "VIPCUP 2022: IEEE Video and Image Processing Cup" class.
 
 #### Open Competition: Part 1
 Part 1 of the open competition is designed to give teams a simplified version of the problem at hand to become familiar with the task. 
 Synthetic images can be fully or partially synthetic. 
 Teams are requested to provide the executable code to the organizers in order to test the algorithms on the evaluation dataset (Test-set 1).
 The synthetic images included in Test-set 1 are generated using five known techniques, while generated models used in Test-set 2 are unknown.
-The five techniques used for synthetic image generation (Test-set 1) are:
-1. StyleGAN2 (https://github.com/NVlabs/stylegan2  )
-2. StyleGAN3 (https://github.com/NVlabs/stylegan3  )
-3. Inpainting with Gated Convolution (https://github.com/JiahuiYu/generative_inpainting ) 
-4. GLIDE for inpainting and image generation from text (https://github.com/openai/glide-text2im )
-5. Taming Transformers  for unconditional image generation, class-conditional image generation and image generation from segmentation maps (https://github.com/CompVis/taming-transformers )
 
 All the images of the test data are randomly cropped and resized to 200x200 pixels and then compressed using JPEG at different quality levels.
 Teams will be provided with PYTHON scripts to apply these operations to the training dataset. 
@@ -68,6 +65,8 @@ Part 2 of the competition is designed to address a more challenging task: synthe
 i.e. synthetic data generated using architectures not present in training. The task remains the same as for Part 1. 
 Teams are requested to provide the executable code to the organizers in order to test the algorithms on the evaluation dataset (Test-set 2).
 
+<details>
+     <summary> Model training, evaluation & scocring process </summary>
 #### Final Competition
 The three highest scoring teams from the open competition will be selected
 and they can provide an additional submission.
@@ -84,6 +83,23 @@ Results will be judged for Part 1 and Part 2 by means of balanced accuracy for t
 The final ranking score will be the weighted average between the accuracy obtained in Part 1 and Part 2 computed as
 
      Score = ( 0.7 × Accuracy_Part_1) + ( 0.3 × Accuracy_Part_2)
+</details>
+
+### Datasets 
+
+Synthetic training images can be download from:
+- StyleGAN2 (https://drive.google.com/drive/folders/1Sak157_DLX84ytqHHqZaH_59HoEWzfB7)
+- StyleGAN3 (https://nvlabs-fi-cdn.nvidia.com/stylegan3/images/)
+- Inpainting with Gated Convolution (2000 images available  https://www.grip.unina.it/download/vipcup2022/gated_convolution_inpainting.zip password: vippascup)
+- GLIDE for inpainting and image generation from the text (2000 images available https://www.grip.unina.it/download/vipcup2022/glide.zip password: vippascup) 
+- Taming Transformers for unconditional image generation (ffhq_k300_p1.0_fid9.6.zip in https://k00.fr/j626x093),  class-conditional image generation (cin_k600_p1.0_a0.05_fid5.20.zip in https://k00.fr/j626x093) and image generation from segmentation maps (https://heibox.uni-heidelberg.de/f/a395a9be612f4a7a8054/)
+
+For real training images, teams can rely on public datasets, such as:
+
+- COCO2017 (https://cocodataset.org/ )
+- LSUN (https://www.yf.io/p/lsun)  
+- ImageNet (https://www.image-net.org/)
+- FFHQ (https://github.com/NVlabs/ffhq-dataset)
 
 ### Submission Information
 
@@ -92,7 +108,9 @@ The executable Python code will be executed inside a Docker container with a GPU
 Therefore, teams should sure that the code is compatible with the libraries present in the Docker image 'gcr.io/kaggle-gpu-images/python:v115'.
 The code has to contain the Python file "main.py" which having a input csv file with the list of test images has to produce an output csv file with a logit value for each test image. A logit value greater than zero indicates that the image is synthetic.
 
-
+<details>
+     <summary> team formation, timeline and finalist selection </summary>
+     
 ### Team Formation and Eligibility
 Each team participating should be composed of one faculty member or someone with a PhD degree employed by the university (the Supervisor), at most one graduate student (the Tutor), and at least three, but no more than ten undergraduate students.
 At least three of the undergraduate team members must hold either regular or student memberships of the IEEE Signal Processing Society.
@@ -132,21 +150,23 @@ Fabrizio Guillaro (Ph.D. Student) and Riccardo Corvi (Research Fellow). NVIDIA i
 
 This competition is sponsored by the IEEE Signal Processing Society and SPS Information Forensics and Security Committee
 
-#### Bibliography
-[1] S. Nightingale, S. Agarwal, E. Harkonen, J. Lehtinen, and H. Farid, “Synthetic faces: how perceptually convincing are they?” in Vision Sciences Society (VSS) meeting, 2021.
+</details>
 
-[2] F. Lago, C. Pasquini, R. Boehme, H. Dumont, V. Goffaux, and G. Boato, “More Real than Real: A Study on Human Visual Perception of Synthetic Faces,” IEEE Signal Processing Magazine, 2021.
+#### Potetial Papers
 
-[3] T. Karras, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, and T. Aila, “Analyzing and improving the image quality of StyleGAN,” in IEEE Conference on Computer Vision and Pattern Recognition, 2020.
+- [ ] Synthetic faces: how perceptually convincing are they? | [paper](https://farid.berkeley.edu/downloads/publications/vss21_poster.pdf)
 
-[4] L. Verdoliva, “Media forensics and deepfakes: an overview”, IEEE Journal of Selected Topics in Signal Processing,  2020.
+- [ ] More Real than Real: A Study on Human Visual Perception of Synthetic Faces | [paper](https://arxiv.org/pdf/2106.07226.pdf)
 
-[5] P. Dhariwal, A. Nichol, “Diffusion Models Beat GANs on Image Synthesis”, arXiv:2105.05233v4, 2021.
+- [ ] Analyzing and improving the image quality of StyleGAN | [paper](https://openaccess.thecvf.com/content_CVPR_2020/papers/Karras_Analyzing_and_Improving_the_Image_Quality_of_StyleGAN_CVPR_2020_paper.pdf)
 
-[6] Ramesh et al., “Hierarchical Text-Conditional Image Generation with CLIP Latents”, arXiv:2204.06125v1, 2022.
+- [ ] Media forensics and deepfakes: an overview | [paper](https://arxiv.org/pdf/2001.06564.pdf)
 
-[7] S.-Y. Wang, O. Wang, R. Zhang, A. Owens, and A. Efros, “CNN-generated images are surprisingly easy to spot... for now,” in IEEE Conference on Computer Vision and Pattern Recognition, 2020.
+- [ ] Diffusion Models Beat GANs on Image Synthesis | [paper](https://openreview.net/pdf?id=OU98jZWS3x_)
 
-[8] D. Gragnaniello, D. Cozzolino, F. Marra, G. Poggi, and L. Verdoliva, “Are GAN generated images easy to detect? A critical analysis of the state-of-the-art,” in IEEE International Conference on Multimedia and Expo, 2021.
+- [ ] Hierarchical Text-Conditional Image Generation with CLIP Latents | [paper](https://arxiv.org/pdf/2204.06125.pdf)
 
+- [ ] CNN-generated images are surprisingly easy to spot... for now | [paper](https://arxiv.org/pdf/1912.11035.pdf)
+
+- [ ] Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | [paper](https://www.semanticscholar.org/reader/0a20dbbe78eab951bba116ac8bd8c84711d5e728)
 
