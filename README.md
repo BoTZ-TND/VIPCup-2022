@@ -170,4 +170,4 @@ __Papers on Synthetic Image Detection__
 - [ ] FaceForensics++: Learning to Detect Manipulated Facial Images | [paper](https://arxiv.org/abs/1901.08971) | [GitHub](https://github.com/ondyari/FaceForensics)
 - [x] Multi-attentional Deepfake Detection | [paper](https://arxiv.org/abs/2103.02406) | [GitHub](https://github.com/yoctta/multiple-attention)
 - [x] FReTAL: Generalizing Deepfake Detection using Knowledge Distillation and Representation Learning | [paper](https://arxiv.org/abs/2105.13617) | [GitHub](https://github.com/alsgkals2/FReTAL)
-
+- [x] Thinking in frequency: Face forgery detection by mining frequency-aware clues | [paper](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123570086.pdf) | [GitHub](https://github.com/Leminhbinh0209/F3Net)
