@@ -154,19 +154,17 @@ This competition is sponsored by the IEEE Signal Processing Society and SPS Info
 
 #### Potetial Papers
 
+> 🥸 Everything you need to know [link](https://github.com/592McAvoy/fake-face-detection) 🏆
+
+__paper on Synthentic Image Generation__
 - [ ] Synthetic faces: how perceptually convincing are they? | [paper](https://farid.berkeley.edu/downloads/publications/vss21_poster.pdf)
-
 - [ ] More Real than Real: A Study on Human Visual Perception of Synthetic Faces | [paper](https://arxiv.org/pdf/2106.07226.pdf)
-
 - [ ] Analyzing and improving the image quality of StyleGAN | [paper](https://openaccess.thecvf.com/content_CVPR_2020/papers/Karras_Analyzing_and_Improving_the_Image_Quality_of_StyleGAN_CVPR_2020_paper.pdf)
-
-- [ ] Media forensics and deepfakes: an overview | [paper](https://arxiv.org/pdf/2001.06564.pdf)
-
 - [ ] Diffusion Models Beat GANs on Image Synthesis | [paper](https://openreview.net/pdf?id=OU98jZWS3x_)
-
 - [ ] Hierarchical Text-Conditional Image Generation with CLIP Latents | [paper](https://arxiv.org/pdf/2204.06125.pdf)
 
+__Papers on Synthetic Image Detection__
+- [ ] Media forensics and deepfakes: an overview | [paper](https://arxiv.org/pdf/2001.06564.pdf)
 - [ ] CNN-generated images are surprisingly easy to spot... for now | [paper](https://arxiv.org/pdf/1912.11035.pdf)
-
 - [ ] Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | [paper](https://www.semanticscholar.org/reader/0a20dbbe78eab951bba116ac8bd8c84711d5e728)
 
