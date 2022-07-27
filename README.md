@@ -167,4 +167,5 @@ __Papers on Synthetic Image Detection__
 - [ ] Media forensics and deepfakes: an overview | [paper](https://arxiv.org/pdf/2001.06564.pdf)
 - [ ] CNN-generated images are surprisingly easy to spot... for now | [paper](https://arxiv.org/pdf/1912.11035.pdf)
 - [ ] Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | [paper](https://www.semanticscholar.org/reader/0a20dbbe78eab951bba116ac8bd8c84711d5e728)
+- [ ] FaceForensics++: Learning to Detect Manipulated Facial Images | [paper](https://arxiv.org/abs/1901.08971) | [GitHub](https://github.com/ondyari/FaceForensics)
 
