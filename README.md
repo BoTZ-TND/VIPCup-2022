@@ -65,6 +65,17 @@ Part 2 of the competition is designed to address a more challenging task: synthe
 i.e. synthetic data generated using architectures not present in training. The task remains the same as for Part 1. 
 Teams are requested to provide the executable code to the organizers in order to test the algorithms on the evaluation dataset (Test-set 2).
 
+### Additional Scripts
+ PYTHON scripts to apply the random operations (randomly cropping, resizing to 200x200 pixels, and JPEG compression)
+https://www.grip.unina.it/download/vipcup2022/random_operations.py
+
+An example of submission, it has to be Python code zipped in a file
+https://www.grip.unina.it/download/vipcup2022/submission.zip 
+
+
+A Linux bash script to test the submission, it requires 'nvidia-docker', 'wget', and 'unzip' commands.
+https://www.grip.unina.it/download/vipcup2022/run_test.sh 
+
 <details>
      <summary> Model training, evaluation & scocring process </summary>
 #### Final Competition
