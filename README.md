@@ -180,5 +180,6 @@ __Papers on Synthetic Image Detection__
 - [ ] Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | [paper](https://www.semanticscholar.org/reader/0a20dbbe78eab951bba116ac8bd8c84711d5e728)
 - [ ] FaceForensics++: Learning to Detect Manipulated Facial Images | [paper](https://arxiv.org/abs/1901.08971) | [GitHub](https://github.com/ondyari/FaceForensics)
 - [x] Multi-attentional Deepfake Detection | [paper](https://arxiv.org/abs/2103.02406) | [GitHub](https://github.com/yoctta/multiple-attention)
-- [x] FReTAL: Generalizing Deepfake Detection using Knowledge Distillation and Representation Learning | [paper](https://arxiv.org/abs/2105.13617) | [GitHub](https://github.com/alsgkals2/FReTAL)
+- [ ] FReTAL: Generalizing Deepfake Detection using Knowledge Distillation and Representation Learning | [paper](https://arxiv.org/abs/2105.13617) | [GitHub](https://github.com/alsgkals2/FReTAL)
 - [x] Thinking in frequency: Face forgery detection by mining frequency-aware clues | [paper](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123570086.pdf) | [GitHub](https://github.com/Leminhbinh0209/F3Net)
+- [x] Lips Don’t Lie: A Generalisable and Robust Approach to Face Forgery Detection | [paper](https://openaccess.thecvf.com/content/CVPR2021/papers/Haliassos_Lips_Dont_Lie_A_Generalisable_and_Robust_Approach_To_Face_CVPR_2021_paper.pdf) | [GitHub](https://github.com/ahaliassos/LipForensics)
