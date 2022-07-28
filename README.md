@@ -182,4 +182,4 @@ __Papers on Synthetic Image Detection__
 - [x] Multi-attentional Deepfake Detection | [paper](https://arxiv.org/abs/2103.02406) | [GitHub](https://github.com/yoctta/multiple-attention)
 - [ ] FReTAL: Generalizing Deepfake Detection using Knowledge Distillation and Representation Learning | [paper](https://arxiv.org/abs/2105.13617) | [GitHub](https://github.com/alsgkals2/FReTAL)
 - [x] Thinking in frequency: Face forgery detection by mining frequency-aware clues | [paper](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123570086.pdf) | [GitHub](https://github.com/Leminhbinh0209/F3Net)
-- [x] Lips Don’t Lie: A Generalisable and Robust Approach to Face Forgery Detection | [paper](https://openaccess.thecvf.com/content/CVPR2021/papers/Haliassos_Lips_Dont_Lie_A_Generalisable_and_Robust_Approach_To_Face_CVPR_2021_paper.pdf) | [GitHub](https://github.com/ahaliassos/LipForensics)
+- [x] Towards Universal GAN Image Detection | [paper](https://arxiv.org/pdf/2112.12606.pdf) | [code](https://github.com/grip-unina/GANimageDetection)
