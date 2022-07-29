@@ -27,9 +27,9 @@ class MakeDataset:
         return files
 
     @staticmethod
-    def copy_files(files: list, out_dir: str):
-        for f in files:
-            shutil.copy(f, out_dir)
+    def copy_files(files: list, out_dir: str, out_ids: list):
+        for f, out_id in zip(files, out_ids):
+            shutil.copy(f, os.path.join(out_dir, out_id))
 
     def split_files(self, image_ids):
         n_train = int(
@@ -62,25 +62,28 @@ class MakeDataset:
                 n = len(t_images)
             t_images = self.rng.choice(t_images, n, replace=False)
             real_images.extend(t_images)
-        # move images to data folder
+
+        # Copy images to data folder
         data_out_dir = os.path.join(self.config['data_out_dir'],
                                     str(self.config['version']))
         if os.path.isdir(data_out_dir):
             shutil.rmtree(data_out_dir)
         image_dir = os.path.join(data_out_dir, 'images')
         os.makedirs(image_dir)
-        self.copy_files(syn_images, image_dir)
-        self.copy_files(real_images, image_dir)
+        syn_ids = [f'syn_{i}{os.path.splitext(f)[1]}' for i, f in enumerate(syn_images)]
+        real_ids = [f'real_{i}{os.path.splitext(f)[1]}' for i, f in enumerate(real_images)]
+        self.copy_files(syn_images, image_dir, syn_ids)
+        self.copy_files(real_images, image_dir, real_ids)
 
         # make labels
         syn_labels = [1 for _ in syn_images]
         real_labels = [0 for _ in real_images]
-        syn_ids = [os.path.split(f)[1] for f in syn_images]
-        real_ids = [os.path.split(f)[1] for f in real_images]
-        images = syn_ids + real_ids
+        image_ids = syn_ids + real_ids
+        image_paths = syn_images + real_images
         labels = syn_labels + real_labels
         label_file = os.path.join(data_out_dir, 'labels.csv')
-        df = pd.DataFrame({'image': images, 'label': labels})
+        df = pd.DataFrame({'image_ids': image_ids, 'label': labels,
+                           'image_path': image_paths})
         df.to_csv(label_file, index=False)
         print('Saved labels to', label_file)
 
@@ -104,7 +107,7 @@ class MakeDataset:
         print('Saved train, val, test splits to', train_file, val_file,
               test_file)
 
-        print('images:', len(images))
+        print('images:', len(image_ids))
         print('syn_images:', len(syn_images))
         print('real_images:', len(real_images))
         print('train:', len(train_ids))
