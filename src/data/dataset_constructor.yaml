@@ -1,0 +1,39 @@
+version: 0.0.1
+sampling_configs:
+  output_size: 100
+  synthetic_ratio: 0.5
+  train_ratio: 0.7
+  test_ratio: 0.2
+  val_ratio: 0.1
+  seed: 1
+dataset_root_dir: './data/original/'
+data_out_dir: './data/created/'
+synthetic_dirs:
+  style_gan2:
+    path: s1
+    ratio: 0.25
+  style_gan3:
+    path: s2
+    ratio: 0.25
+  gated_conv:
+    path: s3
+    ratio: 0.25
+  glide:
+    path: s4
+    ratio: 0.25
+#  tt:
+#    path:
+#    ratio: 0.1
+real_dirs:
+  coco:
+    path: 'r1'
+    ratio: 0.5
+  imagenet:
+    path: 'r2' # change accordingly
+    ratio: 0.5
+#  ffhq:
+#    path:
+#    ratio: 0.1
+#  lsun:
+#    path:
+#    ratio: 0.1
