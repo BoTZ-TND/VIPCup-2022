@@ -49,7 +49,7 @@ def random_operations(input_dir, output_dir, seed, maximg=None):
     with open(os.path.join(output_dir, 'metainfo.csv'), 'w') as fid:
         fid.write('filename,src,cropsize,x1,y1,qf\n')
         for index, src in enumerate(tqdm.tqdm(list_src)):
-            filename_dst = 'img%06d.jpg' % index
+            filename_dst = os.path.splitext(os.path.split(src)[-1])[0] + '.jpg'
             dst = os.path.join(output_dir, filename_dst)
 
             # open image

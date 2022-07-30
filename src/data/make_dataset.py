@@ -5,6 +5,8 @@ import numpy as np
 import shutil
 import pandas as pd
 
+import random_operations
+
 
 class MakeDataset:
     def __init__(self, config_fp: str):
@@ -75,6 +77,10 @@ class MakeDataset:
         self.copy_files(syn_images, image_dir, syn_ids)
         self.copy_files(real_images, image_dir, real_ids)
 
+        # Random Crop and Augmentation
+        random_operations.random_operations(image_dir, os.path.join(image_dir, '..', 'augmented'),
+                                            self.sampling_config['seed'])
+
         # make labels
         syn_labels = [1 for _ in syn_images]
         real_labels = [0 for _ in real_images]
@@ -113,7 +119,9 @@ class MakeDataset:
         print('train:', len(train_ids))
         print('val:', len(val_ids))
         print('test:', len(test_ids))
+
         print('Done!')
+
 
 if __name__ == '__main__':
     make_dataset = MakeDataset('src/data/dataset_constructor.yaml')
