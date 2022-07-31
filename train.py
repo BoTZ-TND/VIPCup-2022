@@ -9,14 +9,12 @@ import random
 
 # config
 dataset_path = '/data/yike/FF++_std_c40_300frames/'
-pretrained_path = 'pretrained/xception-b5690688.pth'
 batch_size = 12
 gpu_ids = [*range(osenvs)]
 max_epoch = 5
 loss_freq = 40
-mode = 'FAD' # ['Original', 'FAD', 'LFS', 'Both', 'Mix']
-ckpt_dir = '/data/yike/checkpoints/F3Net'
-ckpt_name = 'FAD4_bz128'
+ckpt_dir = 'checkpoints/F3Net'
+ckpt_name = 'Botz_test1'
 
 if __name__ == '__main__':
     dataset = FFDataset(dataset_root=os.path.join(dataset_path, 'train', 'real'), size=299, frame_num=300, augment=True)
@@ -43,7 +41,7 @@ if __name__ == '__main__':
     ckpt_model_name = 'best.pkl'
     
     # train
-    model = Trainer(gpu_ids, mode, pretrained_path)
+    model = Trainer(gpu_ids)
     model.total_steps = 0
     epoch = 0
     
