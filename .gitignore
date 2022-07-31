@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# xception pretrained checkpoint
+checkpoints/xception-b5690688.pth
