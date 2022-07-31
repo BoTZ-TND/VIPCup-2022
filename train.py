@@ -8,8 +8,8 @@ from trainer import Trainer
 import random
 
 # config
-dataset_path = '/data/yike/FF++_std_c40_300frames/'
-batch_size = 12
+dataset_path = 'data'
+batch_size = 2
 gpu_ids = [*range(osenvs)]
 max_epoch = 5
 loss_freq = 40
@@ -22,7 +22,7 @@ if __name__ == '__main__':
         dataset=dataset,
         batch_size=batch_size // 2,
         shuffle=True,
-        num_workers=8)
+        num_workers=1)
     
     len_dataloader = dataloader_real.__len__()
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         dataset=dataset_img,
         batch_size=batch_size // 2,
         shuffle=True,
-        num_workers=8
+        num_workers=1
     )
 
     # init checkpoint and logger
@@ -71,7 +71,8 @@ if __name__ == '__main__':
             bz = data_real.shape[0]
             
             data = torch.cat([data_real,data_fake],dim=0)
-            label = torch.cat([torch.zeros(bz).unsqueeze(dim=0),torch.ones(bz).unsqueeze(dim=0)],dim=1).squeeze(dim=0)
+            label = torch.cat([torch.zeros(bz).unsqueeze(dim=0),torch.ones(bz).unsqueeze(dim=0)],dim=1).squeeze(dim=0).to(torch.int64)
+            label = torch.nn.functional.one_hot(label, num_classes=2).float()
 
             # manually shuffle
             idx = list(range(data.shape[0]))
