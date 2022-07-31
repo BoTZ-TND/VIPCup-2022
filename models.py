@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
-from xception import Xception
+from xception import return_pytorch04_xception
 
 class Filter(nn.Module):
     def __init__(self, size, 
@@ -17,6 +17,7 @@ class Filter(nn.Module):
         if self.use_learnable:
             self.learnable = nn.Parameter(torch.randn(size, size), requires_grad=True)
             self.learnable.data.normal_(0., 0.1)
+            # REPEATING OPERATIONS?
             # Todo
             # self.learnable = nn.Parameter(torch.rand((size, size)) * 0.2 - 0.1, requires_grad=True)
 
@@ -50,6 +51,7 @@ class FAD_Head(nn.Module):
         middle_filter = Filter(size, size // 16, size // 8)
         high_filter = Filter(size, size // 8, size)
         all_filter = Filter(size, 0, size * 2)
+        # BANDS ARE DIFFERENT
 
         self.filters = nn.ModuleList([low_filter, middle_filter, high_filter, all_filter])
 

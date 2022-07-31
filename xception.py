@@ -2,21 +2,6 @@ import torch
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
-pretrained_settings = {
-    'xception': {
-        'imagenet': {
-            'url': 'http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth',
-            'input_space': 'RGB',
-            'input_size': [3, 299, 299],
-            'input_range': [0, 1],
-            'mean': [0.5, 0.5, 0.5],
-            'std': [0.5, 0.5, 0.5],
-            'num_classes': 1000,
-            'scale': 0.8975 # The resize parameter of the validation transform should be 333, and make sure to center crop at 299x299
-        }
-    }
-}
-
 class SeparableConv2d(nn.Module):
     def __init__(self,in_channels,out_channels,kernel_size=1,stride=1,padding=0,dilation=1,bias=False):
         super(SeparableConv2d,self).__init__()
@@ -80,19 +65,7 @@ class Block(nn.Module):
         x+=skip
         return x
 
-# MISSING 'ClassBlock'
-
-def return_pytorch04_xception(pretrained=True):
-    model = xception(pretrained=False)
-    if pretrained:
-        state_dict = torch.load(
-            '../checkpoints/xception-b5690688.pth')
-        for name, weights in state_dict.items():
-            if 'pointwise' in name:
-                state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
-        model.load_state_dict(state_dict, strict=False)
- 
-    return model
+# MISSING 'ClassBlock <- classify the final result'
 
 class Xception(nn.Module):
     """
@@ -138,20 +111,18 @@ class Xception(nn.Module):
         self.conv4 = SeparableConv2d(1536,2048,3,1,1)
         self.bn4 = nn.BatchNorm2d(2048)
 
-def xception(num_classes=1000, pretrained='imagenet'):
-    model = Xception(num_classes=num_classes)
+        # Missing 'fc <- Linear(2048, 1000)' and 'dp <- Dropout(p=0.2)' layers
+
+        # Missing 'forward' function
+
+def return_pytorch04_xception(pretrained=True):
+    model = Xception(num_classes=1000)
     if pretrained:
-        settings = pretrained_settings['xception'][pretrained]
-        assert num_classes == settings['num_classes'], \
-            "num_classes should be {}, but is {}".format(settings['num_classes'], num_classes)
-
-        model = Xception(num_classes=num_classes)
-        model.load_state_dict(model_zoo.load_url(settings['url']))
-
-        model.input_space = settings['input_space']
-        model.input_size = settings['input_size']
-        model.input_range = settings['input_range']
-        model.mean = settings['mean']
-        model.std = settings['std']
-
+        state_dict = torch.load(
+            'checkpoints/xception-b5690688.pth')
+        for name, weights in state_dict.items():
+            if 'pointwise' in name:
+                state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
+        model.load_state_dict(state_dict, strict=False)
+ 
     return model
