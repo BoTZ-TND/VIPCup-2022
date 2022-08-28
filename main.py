@@ -1,46 +1,49 @@
-from config import train_config
-from train import distributed_train,main_worker
-from evaluation import all_eval
-import argparse
-import fire
-import torch
-import subprocess
-#torch.autograd.set_detect_anomaly(True)
+import pandas as pd 
+import numpy as np 
+import cv2 
+import torch 
+import os 
+import json 
+from sys import argv
+from tqdm import tqdm
+from models.MAT import MAT
 
-def pretrain():
-    name='Efb4'
-    url='tcp://127.0.0.1:27015'
-    Config=train_config(name,['ff-all-c23','efficientnet-b4'],url=url,attention_layer='b5',feature_layer='logits',epochs=20,batch_size=16,AGDA_loss_weight=0)
-    Config.mkdirs()
-    distributed_train(Config) 
-    procs=[subprocess.Popen(['/bin/bash','-c','CUDA_VISIBLE_DEVICES={} python main.py test {} {}'.format(i,name,j)]) for i,j in enumerate(range(-3,0))]
-    for i in procs:
-        i.wait()
+input_csv = argv[1]
+output_csv = argv[2]
 
-## do pretrain first!
-def aexp():
-    name='a1_b5_b2'  
-    url='tcp://127.0.0.1:27016'
-    Config=train_config(name,['ff-all-c23','efficientnet-b4'],url=url,attention_layer='b5',feature_layer='b2',epochs=50,batch_size=15,\
-        ckpt='checkpoints/Efb4/ckpt_19.pth',inner_margin=[0.2,-0.8],margin=0.8)
-    Config.mkdirs()
-    distributed_train(Config) 
-    procs=[subprocess.Popen(['/bin/bash','-c','CUDA_VISIBLE_DEVICES={} python main.py test {} {}'.format(i,name,j)]) for i,j in enumerate(range(-3,0))]
-    for i in procs:
-        i.wait()
+root_db = os.path.dirname(input_csv)
+tab = pd.read_csv(input_csv)
 
+def load_sample(image_path):
+    image = cv2.imread(image_path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    image = cv2.resize(image, (200, 200))
+    image = np.transpose(image, (2,0,1))[np.newaxis, ...]
+    image_tensor = torch.from_numpy(image).float()
+    return image_tensor
 
-def resume(name,epochs=0):
-    Config=train_config.load(name)
-    Config.epochs+=epochs
-    Config.reload()
-    Config.resume_optim=True
-    distributed_train(Config) 
-    for i in range(-3,0):
-        all_eval(name,i)
+def load_model(chk_path, config_path):
+    with open(config_path, 'r') as pf:
+        model_config = json.load(pf)
 
-def test(name,ckpt=None):
-    all_eval(name,ckpt)
-        
-if __name__=="__main__":
-    fire.Fire()
+    model = MAT(**model_config)
+    model_checkpoint = torch.load(chk_path)
+    model.load_state_dict(model_checkpoint['state_dict'])
+    model.eval()
+
+    return model 
+
+def get_pred(model, image):
+    sample_output = torch.softmax(model(image), dim=-1)
+    label = torch.argmax(sample_output).numpy()
+    return label.numpy()
+
+model = load_model('./data/ckpt_4.pth', './data/model_config.json')
+
+for index, dat in tqdm(tab.iterrows(), total=len(tab)):
+    filename = os.path.join(root_db, dat['filename'])
+    sample = load_sample(filename)
+    logit = get_pred(model, sample)
+    tab.loc[index, 'logit'] = logit 
+
+tab.to_csv(output_csv, index=False)
