@@ -36,7 +36,7 @@ def load_model(chk_path, config_path):
 def get_pred(model, image):
     sample_output = torch.softmax(model(image), dim=-1)
     label = torch.argmax(sample_output).numpy()
-    return label.numpy()
+    return label
 
 model = load_model('./data/ckpt_4.pth', './data/model_config.json')
 

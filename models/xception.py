@@ -116,7 +116,7 @@ class xception(nn.Module):
         self.seq.append(('final',[self.conv3,lambda x:self.bn3(x),self.relu3,self.conv4,lambda x:self.bn4(x)]))
         self.seq.append(('logits',[self.relu4,lambda x:F.adaptive_avg_pool2d(x, (1, 1)),lambda x:x.view(x.size(0), -1),self.last_linear]))
         if pretrained=='imagenet':
-            self.load_state_dict(model_zoo.load_url('http://data.lip6.fr/cadene/pretrainedmodels/xception-43020ad28.pth'),strict=False)
+            pass #self.load_state_dict(model_zoo.load_url('http://data.lip6.fr/cadene/pretrainedmodels/xception-43020ad28.pth'),strict=False)
         elif pretrained:
             ckpt=torch.load(pretrained,map_location='cpu')
             self.load_state_dict(ckpt['state_dict'])
