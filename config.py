@@ -43,6 +43,9 @@ class train_config:
         self.AGDA_zoom=(3,5)
         self.AGDA_noise_rate=0.1
         self.AGDA_mode='soft'
+        self.AGDA_Aux_loss=False 
+        self.AGDA_one_mask=[]
+        self.AGDA_zero_mask=[]
 
         ###loss configs
         self.ensemble_loss_weight=1
@@ -58,7 +61,7 @@ class train_config:
         self.val_dataset=self.train_dataset
         self.val_dataset['df'] = self.eval_df
         self.net_config=dict(net=self.net,feature_layer=self.feature_layer,attention_layer=self.attention_layer,num_classes=self.num_classes, M=self.num_attentions,\
-            mid_dims=self.mid_dims,dropout_rate=self.dropout_rate,drop_final_rate=self.drop_final_rate,pretrained=self.pretrained,alpha=self.alpha,size=self.resize,margin=self.margin,inner_margin=self.inner_margin)
+            mid_dims=self.mid_dims,dropout_rate=self.dropout_rate,drop_final_rate=self.drop_final_rate,pretrained=self.pretrained,alpha=self.alpha,size=self.resize,margin=self.margin,inner_margin=self.inner_margin,aux_header=self.AGDA_Aux_loss,one_mask=self.AGDA_one_mask,zero_mask=self.AGDA_zero_mask)
         self.AGDA_config=dict(kernel_size=self.AGDA_kernel_size,dilation=self.AGDA_dilation,sigma=self.AGDA_sigma,scale_factor=self.AGDA_scale_factor,threshold=self.AGDA_threshold,zoom=self.AGDA_zoom,noise_rate=self.AGDA_noise_rate,mode=self.AGDA_mode)
 
     def recipe(self,name):

@@ -216,10 +216,25 @@ class Auxiliary_Loss_v1(nn.Module):
         #inter_class_loss=torch.mean(F.relu(F.cosine_similarity(fmd.unsqueeze(1),fmd.unsqueeze(2),dim=3)-self.margin,inplace=True)*(1-torch.eye(M,device=attentions.device)))
         return intra_class_loss+inter_class_loss,feature_matrix
 
+class Auxiliary_BCE(nn.Module):
+    def __init__(self, zero_set, one_set):
+        self.zs = zero_set
+        self.os = one_set 
+        self.loss_func = nn.BCELoss()
+
+    def forward(self, logit, label):
+        logit = torch.softmax(logit, dim=-1)
+        # logit in shape of 32, 7 | <batch size, num classes>
+        zero_logits = torch.sum(logit[:, self.zs], dim=1)[..., None]
+        one_logits = torch.sum(logit[:, self.os], dim=1)[..., None]
+        assert zero_logits.shape == one_logits 
+        loss = self.loss_func(zero_logits, label)
+
+
 
 class MAT(nn.Module):
     def __init__(self, net='xception',feature_layer='b3',attention_layer='final',num_classes=2, M=8,mid_dims=256,\
-    dropout_rate=0.5,drop_final_rate=0.5, pretrained=False,alpha=0.05,size=(380,380),margin=1,inner_margin=[0.01,0.02]):
+    dropout_rate=0.5,drop_final_rate=0.5, pretrained=False,alpha=0.05,size=(380,380),margin=1,inner_margin=[0.01,0.02], aux_header=False, one_mask=[], zero_mask=[]):
         super(MAT, self).__init__()
         self.num_classes = num_classes
         self.M = M
@@ -247,12 +262,13 @@ class MAT(nn.Module):
         self.projection_local=nn.Sequential(nn.Linear(M*self.num_features,mid_dims),nn.Hardswish(),nn.Linear(mid_dims,mid_dims))
         self.project_final=nn.Linear(layers['final'].shape[1],mid_dims)
         self.ensemble_classifier_fc=nn.Sequential(nn.Linear(mid_dims*2,mid_dims),nn.Hardswish(),nn.Linear(mid_dims,num_classes))
-        self.auxiliary_loss=Auxiliary_Loss_v2(M,self.num_features_d,num_classes,alpha,margin,inner_margin)
+        if aux_header:
+            self.auxiliary_loss=Auxiliary_BCE(zero_mask, one_mask)
         self.dropout=nn.Dropout2d(dropout_rate,inplace=True)
         self.dropout_final=nn.Dropout(drop_final_rate,inplace=True)
         #self.center_loss=Center_Loss(self.num_features*M,num_classes)
 
-    def train_batch(self,x,y,jump_aux=False,drop_final=False):
+    def train_batch(self,x,y, tag=None, jump_aux=False,drop_final=False):
         layers = self.net(x)
         if self.feature_layer=='logits':
             logits=layers['logits']
@@ -288,15 +304,20 @@ class MAT(nn.Module):
         feature_matrix=torch.cat((feature_matrix,projected_final),1)
         ensemble_logit=self.ensemble_classifier_fc(feature_matrix)
         ensemble_loss=F.cross_entropy(ensemble_logit,y)
+        if not(tag is None):
+            aux_loss = self.auxiliary_loss(ensemble_logit, tag)
+        else:
+            aux_loss=0
+
         return dict(ensemble_loss=ensemble_loss,aux_loss=aux_loss,attention_maps=attention_maps_,ensemble_logit=ensemble_logit,feature_matrix=feature_matrix_,feature_matrix_d=feature_matrix_d)
 
 
-    def forward(self, x,y=0,train_batch=False,AG=None):
+    def forward(self, x,y=0, tag=None, train_batch=False,AG=None):
         if train_batch:
             if AG is None:
-                return self.train_batch(x,y)
+                return self.train_batch(x,y,tag)
             else:
-                loss_pack=self.train_batch(x,y)
+                loss_pack=self.train_batch(x,y,tag)
                 with torch.no_grad():
                     Xaug,index=AG.agda(x,loss_pack['attention_maps'])
                 #self.eval()
