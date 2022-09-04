@@ -218,6 +218,7 @@ class Auxiliary_Loss_v1(nn.Module):
 
 class Auxiliary_BCE(nn.Module):
     def __init__(self, zero_set, one_set):
+        super().__init__()
         self.zs = zero_set
         self.os = one_set 
         self.loss_func = nn.BCELoss()
